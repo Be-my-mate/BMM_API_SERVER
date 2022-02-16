@@ -1,5 +1,5 @@
 
-# BMM API SERVER Repository
+# BMM API SERVER Repository ✏️
 
 ## 서비스 소개
 **함께 공부하고 성장할 사람을 구하는, 팀원 구하기 서비스**
@@ -54,7 +54,7 @@
 | Initial commit             | init                               | 작업 세팅 커밋 (패키지 설치 등) |
 | feat                | feat                       | 새로운 기능, UI 등 | 
 | bug                     | bug                                 |  버그 수정/리포트  |
-| Documentation              | docu                             | 문서화 |
+| Documentation              | docs                             | 문서화 |
 | refactor             | refac                           | 구조 변경, 리팩토링 |
 | remove or edit        | edit                              |  파일 삭제 및 수정 |
 
