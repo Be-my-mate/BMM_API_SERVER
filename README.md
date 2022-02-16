@@ -18,7 +18,7 @@
             </a>
         </td>
         <td style="min-width: 150px;">
-            <a href="https://github.com/BenKwonr">
+            <a href="https://github.com/BenKwon">
               <img src="https://github.com/BenKwon.png" width="100">
               <br />
               <b>권승주 <br> (BenKwon)</b>
