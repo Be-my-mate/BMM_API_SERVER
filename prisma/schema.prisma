@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id Int @id @default(autoincrement())
+  email String @unique @db.VarChar(50) 
+  name String @db.VarChar(50)
+  created_at DateTime @default(now())
+  post post[]
+  comment comment[]
+  chatLog chatLog[]
+  userChatCheckTime user_Chat_Check_Time[]
+  userJoinPost user_Join_Post?
+  role Role @default(USER)
+}
+
+model post{
+  id Int @id @default(autoincrement())
+  title String @db.VarChar(50)
+  content String @db.VarChar(2000)
+  created_at DateTime @default(now())
+  hit Int @default(0)
+  head_count Int 
+  user_id Int
+  author user @relation(fields: [user_id], references: [id])
+  comment comment[]
+  chatLog chatLog[]
+  userChatCheckTime user_Chat_Check_Time[]
+  userJoinPost user_Join_Post?
+}
+
+model comment{
+  id Int @id @default(autoincrement())
+  parent_id Int
+  content String @db.VarChar(1000)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user_id Int
+  post_id Int
+  author user @relation(fields: [user_id], references: [id])
+  post post @relation(fields: [post_id],references: [id])
+}
+
+model tag{
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(10)
+  tagPostRelations tag_Post_Relations[]
+}
+
+model tag_Post_Relations{
+  id Int @id @default(autoincrement())
+  post_id Int
+  tag_id Int
+  tagName tag @relation(fields: [tag_id], references: [id])
+  created_at DateTime @default(now())
+  @@unique([tag_id,post_id], name: "Tag_Post_Relation_unique_constraint")
+}
+
+model user_Join_Post{
+  id Int @id @default(autoincrement())
+  user_id Int
+  post_id Int
+  user user @relation(fields: [user_id], references: [id])
+  post post @relation(fields: [post_id], references: [id])
+  created_at DateTime @default(now())
+
+  @@unique([user_id,post_id], name: "User_Post_Join_unique_constraint")
+}
+
+model chatLog{
+  id Int @id @default(autoincrement())
+  content String @db.VarChar(2000)
+  created_at DateTime @default(now())
+  user_id Int
+  post_id Int
+  user user @relation(fields: [user_id], references: [id])
+  post post @relation(fields: [post_id], references: [id])
+}
+
+model user_Chat_Check_Time{
+  id Int @id @default(autoincrement())
+  last_check DateTime
+  user_id Int
+  post_id Int
+  user user @relation(fields: [user_id], references: [id])
+  post post @relation(fields: [post_id], references: [id])
+  @@unique([user_id,post_id], name: "User_Post_Join_unique_constraint")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
